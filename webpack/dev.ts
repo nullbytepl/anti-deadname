@@ -25,7 +25,7 @@ export default merge(base, {
                 version: `${version}-${Date.now()}`,
                 match: matches,
                 isRelease: false,
-                updateURL: 'http://172.24.112.1:8080/bundle.dev.user.js'
+                updateURL: 'http://172.24.112.1:8080/bundle.dev.js'
             }),
             raw: true,
         })
