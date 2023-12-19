@@ -8,7 +8,7 @@ interface HeaderOptions {
 const generateHeader = (options: HeaderOptions) => {
   const { version, match, isRelease, updateURL } = options
   return `// ==UserScript==
-// @name 🏳️‍⚧️ anti-deadname (PW)
+// @name ${isRelease ? '' : '(DEV) '}🏳️‍⚧️ anti-deadname (PW)
 // @description hihi
 // @version ${version}-${isRelease ? 'release' : 'dev'}
 ${generateMatches(match)}
