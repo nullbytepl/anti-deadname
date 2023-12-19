@@ -44,13 +44,12 @@ class Studia2SiteImpl extends Site {
 
         // Technically, there are two tables with this class, but the first one is the one we want
         const GRADES_TABLE_SELECTOR = 'table.list' 
-
         const GRADES_LASTNAME_COLUMN_NAME = 'Nazwisko'
-        const GRADES_LASTNAME_SELECTOR = matchTableCellByColumnName(GRADES_TABLE_SELECTOR, GRADES_LASTNAME_COLUMN_NAME)
         const GRADES_FIRSTNAME_COLUMN_NAME = 'Imiona'
-        const GRADES_FIRSTNAME_SELECTOR = matchTableCellByColumnName(GRADES_TABLE_SELECTOR, GRADES_FIRSTNAME_COLUMN_NAME)
         const GRADES_PATH_REGEX = /^\/(pl|en)\/.{3}\/.*\/info\/$/
         if (address().matchPath(GRADES_PATH_REGEX)) {
+            const GRADES_LASTNAME_SELECTOR = matchTableCellByColumnName(GRADES_TABLE_SELECTOR, GRADES_LASTNAME_COLUMN_NAME)
+            const GRADES_FIRSTNAME_SELECTOR = matchTableCellByColumnName(GRADES_TABLE_SELECTOR, GRADES_FIRSTNAME_COLUMN_NAME)
             GRADES_LASTNAME_SELECTOR.textContent = this.user.lastName
             GRADES_FIRSTNAME_SELECTOR.textContent = this.user.firstName
         }
