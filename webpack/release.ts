@@ -21,7 +21,7 @@ export default merge(base, {
     plugins: [
         new BannerPlugin({
             banner: generateHeader({
-                version: `${version}-${Date.now()}`,
+                version: `${version}`,
                 match: matches,
                 isRelease: true,
             }),
