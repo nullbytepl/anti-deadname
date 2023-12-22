@@ -11,6 +11,8 @@ abstract class ParaHTMLElement {
     innerText: string // Text content of the element. Read-write
     innerHTML: string // HTML content of the element. Read-write
     exists: boolean // Does the element exist? Read-only
+    getAttribute: (name: string) => string | null // Get attribute value
+    setAttribute: (name: string, value: string) => void // Set attribute value
 }
 
 class ParaHTMLElementImpl implements ParaHTMLElement {
@@ -91,6 +93,18 @@ class ParaHTMLElementImpl implements ParaHTMLElement {
 
     shadowRootSelector(selector: string): ParaHTMLElement {
         return new ParaHTMLElementImpl(selector, this.element.shadowRoot)
+    }
+
+    getAttribute(name: string): string | null {
+        return this.exists ? this.element.getAttribute(name) : null
+    }
+
+    setAttribute(name: string, value: string): void {
+        if (this.exists) {
+            this.element.setAttribute(name, value)
+        } else {
+            console.log('ParaHTMLElementImpl#setAttribute() element==null')
+        }
     }
 }
 

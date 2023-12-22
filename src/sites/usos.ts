@@ -1,9 +1,11 @@
 import Site from '../model/site'
 import User from '../model/user'
+import GramaticalGender from '../model/gramatical_gender'
 import { replaceExpressions } from '../model/gendered_strings'
 
 import html from '../utils/para_html'
 import address from '../utils/address'
+import title from '../utils/title'
 
 import allUsosStrings from './usos_strings'
 
@@ -103,12 +105,71 @@ class UsosSiteImpl extends Site {
             const scholarshipsInfoBox = html.selector(SCHOLARSHIPS_INFO_BOX_SELECTOR)
             scholarshipsInfoBox.innerHTML = replaceExpressions(scholarshipsInfoBox.innerHTML, allUsosStrings, this.user.gramaticalGender)
         }
+
+        // User profile - katalog2/osoby/pokazOsobe 
+        const USER_PROFILE_ATTRS_SELECTOR = 'div[id=user-attrs-id]'
+        const USER_PROFILE_HEADER_SELECTOR = 'h1.uwb-inline-heading'
+        const USER_PROFILE_SIDEBAR_ENTRY_SELECTOR = 'ul > li > span.selected.dynamic'
+        const USER_PROFILE_ATTRS_FIRST_NAME_SELECTOR = 'div[id=user-attrs-id] > div.uwb-side-defs > div.uwb-clearfix:nth-child(1) > div:nth-child(2)'
+        const USER_PROFILE_ATTRS_LAST_NAME_SELECTOR = 'div[id=user-attrs-id] > div.uwb-side-defs > div.uwb-clearfix:nth-child(2) > div:nth-child(2)'
+        const USER_PROFILE_BASIC_INFO_SELECTOR = 'div.uwb-section-content'
+        const USER_PROFILE_AVATAR_SELECTOR = 'div.uwb-imgcover-photo-wrapper > img'
+
+        const FEMININE_AVATAR_URL = 'https://apps.usos.pw.edu.pl/res/up/200x250/blank-female-4.jpg'
+        const MASCULINE_AVATAR_URL = 'https://apps.usos.pw.edu.pl/res/up/200x250/blank-male-4.jpg'
+
+        if (this.matchAction('katalog2/osoby/pokazOsobe')) {
+            // We need to check if the profile is of the current user
+            // To do that, check if the user attributes box contains a line called "USOS ID"
+            const userAttributesBox = html.selector(USER_PROFILE_ATTRS_SELECTOR)
+            if (userAttributesBox.textContent.includes('USOS ID')) {
+                // If it does, we can replace the name
+
+                // First: The title
+                // The title is in the format "Firstname Lastname - USOS - something"
+                // We want to keep the part after the dash, so we split by dash and keep the parts except the first one
+                const profileTitle = title.value
+                const profileTitleParts = profileTitle.split('-')
+                const profileTitleWithoutName = profileTitleParts.slice(1).join('-')
+                title.value = `${this.user.name} - ${profileTitleWithoutName}`
+
+                // Second: Name in the header
+                const profileHeader = html.selector(USER_PROFILE_HEADER_SELECTOR)
+                profileHeader.textContent = this.user.name
+
+                // Third: Name in the sidebar 
+                const profileSidebarEntry = html.selector(USER_PROFILE_SIDEBAR_ENTRY_SELECTOR)
+                profileSidebarEntry.textContent = this.user.name
+
+                // Fourth: Name in the user attributes box
+                const profileAttrsFirstName = html.selector(USER_PROFILE_ATTRS_FIRST_NAME_SELECTOR)
+                profileAttrsFirstName.textContent = this.user.firstName
+                const profileAttrsLastName = html.selector(USER_PROFILE_ATTRS_LAST_NAME_SELECTOR)
+                profileAttrsLastName.textContent = this.user.lastName
+
+                // Fifth: student/studentka in the user basic info box (only in polish)
+                if (!this.isUsosLanguageEnglish()) {
+                    const profileBasicInfo = html.selector(USER_PROFILE_BASIC_INFO_SELECTOR)
+                    profileBasicInfo.innerHTML = replaceExpressions(profileBasicInfo.innerHTML, allUsosStrings, this.user.gramaticalGender)
+                }
+
+                // Sixth: avatar
+                // We only have fem and masc variants available, so lets use masc for neutral for now
+                const profileAvatar = html.selector(USER_PROFILE_AVATAR_SELECTOR)
+                profileAvatar.setAttribute('src', this.user.gramaticalGender === GramaticalGender.FEMININE ? FEMININE_AVATAR_URL : MASCULINE_AVATAR_URL)
+            }
+        }
         
         return true
     }
 
     private matchAction(action: string): boolean {
         return address().matchQuery(new Map([['_action', action]])) && address().matchPath('/kontroler.php')
+    }
+
+    private isUsosLanguageEnglish(): boolean {
+        // Check the service name in the top left corner
+        return html.selector('div[slot="service-name"]').textContent.includes('Warsaw University of Technology')
     }
 }
 

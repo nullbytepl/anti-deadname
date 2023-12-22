@@ -98,6 +98,25 @@ const scholarshipsStrings: GenderedString[] = [
     }
 ]
 
+// Profile
+const profileStrings: GenderedString[] = [
+    {
+        feminine: 'studentka',
+        masculine: 'student',
+        neutral: 'osoba studencka',
+    },
+    {
+        feminine: 'Aktywna',
+        masculine: 'Aktywny',
+        neutral: 'Aktywna',
+    },
+    {
+        feminine: 'Była',
+        masculine: 'Były',
+        neutral: 'Była',
+    },    
+]
+
 const allUsosStrings: GenderedString[] = [
     ...linkageBoxStrings,
     ...genericStudentStrings,
@@ -106,6 +125,7 @@ const allUsosStrings: GenderedString[] = [
     ...groupsStrings,
     ...decisionsStrings,
     ...scholarshipsStrings,
+    ...profileStrings,
 ]
 
 export default allUsosStrings
