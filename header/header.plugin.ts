@@ -18,6 +18,7 @@ ${generateMatches(match)}
 // @grant GM.setValue
 // @grant GM_setValue
 // @author Kamila Wojciechowska (@za_raczke)
+// @run-at document-idle
 ${updateURL ? `// @updateURL ${updateURL}` : ''}
 // ==/UserScript==
 `
