@@ -8,6 +8,7 @@ import address from '../utils/address'
 import title from '../utils/title'
 
 import allUsosStrings from './usos_strings'
+import { genericStudentStrings } from './usos_strings'
 
 class UsosSiteImpl extends Site {
     private user: User
@@ -41,7 +42,7 @@ class UsosSiteImpl extends Site {
             const boxes = html.selectorAll(BOXES_SELECTOR)
             for (const box of boxes) {
                 const boxTitle = box.selector('h2 > a')
-                boxTitle.textContent = replaceExpressions(boxTitle.textContent, allUsosStrings, this.user.gramaticalGender)
+                boxTitle.textContent = replaceExpressions(boxTitle.textContent, genericStudentStrings, this.user.gramaticalGender)
             }
         }
 
@@ -159,6 +160,9 @@ class UsosSiteImpl extends Site {
                 profileAvatar.setAttribute('src', this.user.gramaticalGender === GramaticalGender.FEMININE ? FEMININE_AVATAR_URL : MASCULINE_AVATAR_URL)
             }
         }
+
+        // <3
+        html.selector('usos-copyright').shadowRootSelector('#layoutCopyright > p').textContent = '💙🩷🤍🩷💙'
         
         return true
     }

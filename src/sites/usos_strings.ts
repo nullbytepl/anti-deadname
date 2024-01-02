@@ -129,3 +129,4 @@ const allUsosStrings: GenderedString[] = [
 ]
 
 export default allUsosStrings
+export { genericStudentStrings }
