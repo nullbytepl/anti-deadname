@@ -44,6 +44,16 @@ const registrationStrings: GenderedString[] = [
         feminine: 'wyrejestrowałam',
         masculine: 'wyrejestrowałem',
         neutral: 'wyrejestrowałxm',
+    },
+    {
+        feminine: 'zarejestrowałaś',
+        masculine: 'zarejestrowałeś',
+        neutral: 'zarejestrowałxś',
+    },
+    {
+        feminine: 'Złożyłaś',
+        masculine: 'Złożyłeś',
+        neutral: 'Złożyłxś',
     }
 ]
 

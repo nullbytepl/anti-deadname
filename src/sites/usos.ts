@@ -161,6 +161,13 @@ class UsosSiteImpl extends Site {
             }
         }
 
+        // Registration confirmation - dla_stud/rejestracja/zwykla/potwierdzenie
+        const REGISTRATION_CONFIRMATION_BOX_SELECTOR = 'usos-frame'
+        if (this.matchAction('dla_stud/rejestracja/zwykla/potwierdzenie')) {
+            const registrationConfirmationBox = html.selector(REGISTRATION_CONFIRMATION_BOX_SELECTOR)
+            registrationConfirmationBox.innerHTML = replaceExpressions(registrationConfirmationBox.innerHTML, allUsosStrings, this.user.gramaticalGender)
+        }
+
         // <3
         html.selector('usos-copyright').shadowRootSelector('#layoutCopyright > p').textContent = '💙🩷🤍🩷💙'
         
