@@ -44,7 +44,7 @@ class ParaHTMLElementImpl implements ParaHTMLElement {
     }
 
     get exists(): boolean {
-        return this.element !== null
+        return this.element !== null && this.element !== undefined
     }
 
     get textContent(): string {
