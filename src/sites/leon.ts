@@ -21,11 +21,10 @@ class LeonSiteImpl extends Site {
     execute(): boolean {
         console.log('LeonSiteImpl#execute()')
 
-        // User greeting (shows up once after logging in, only in /my/)
+        // User greeting (shows up once after logging in, usually in /my/, 
+        // but some redirects can cause it to show up in other places)
         const USER_GREETING_SELECTOR = '#page-header > div > .align-items-center > .mb-3'
-        if (address().matchPath('/my/')) {
-            html.selector(USER_GREETING_SELECTOR).textContent = this.generateGreeting()
-        }
+        html.selector(USER_GREETING_SELECTOR).textContent = this.generateGreeting()
 
         // User initials in the top right corner
         const USER_INITIALS_SELECTOR = 'span.avatar > span.userinitials'
