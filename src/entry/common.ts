@@ -30,7 +30,7 @@ const executeInjection = (sites: Site[]) => {
 }
 
 const commonApiHosts: string[] = [
-    // TODO: once we have decided on a domain name, add it here
+    'nd.pedali.ca',
 ]
 
 const executeApiInjection = (hosts: string[]): boolean => {
