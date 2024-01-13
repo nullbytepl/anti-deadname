@@ -27,6 +27,15 @@ abstract class User {
             return firstName[0] + lastName[0]
         }
     }
+    abstract setFirstName(firstName: string): void
+    abstract setLastName(lastName: string): void
+    abstract setGramaticalGender(gramaticalGender: string): void
+    abstract getGramaticalGenderString(): string
+    abstract setEmoji(emoji: string): void
+    
+    // Methods to check whether the user has configured the extension
+    hasUserConfigured: boolean
+    abstract setHasUserConfigured(): void
 }
 
 export default User

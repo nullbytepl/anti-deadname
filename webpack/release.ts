@@ -22,6 +22,7 @@ const USERSCRIPT_HEADER_COMMENT_REGEX = new RegExp(
 )
 
 export default merge(base, {
+    entry: './src/entry/release.ts',
     mode: 'production',
     cache: {
         type: 'filesystem',

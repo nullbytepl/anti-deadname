@@ -9,6 +9,7 @@ import matches from '../header/matches.plugin'
 import version from '../src/version'
 
 export default merge(base, {
+    entry: './src/entry/dev.ts',
     mode: 'development',
     cache: {
         type: 'filesystem',
@@ -23,9 +24,9 @@ export default merge(base, {
         new BannerPlugin({
             banner: generateHeader({
                 version: `${version}-${Date.now()}`,
-                match: matches,
+                match: [...matches, 'http://127.0.0.1:8080/*'],
                 isRelease: false,
-                updateURL: 'http://172.24.112.1:8080/bundle.dev.js'
+                updateURL: 'http://127.0.0.1:8080/bundle.dev.js'
             }),
             raw: true,
         })
