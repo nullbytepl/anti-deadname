@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>nodead - configuration</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background-color: #FDE9F1;
+        }
+
+        * {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #scriptnotinstalled {
+            text-align: center;
+        }
+
+        .primary {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-size: 2em;
+            text-align: center;
+        }
+
+        .field {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .hint {
+            color: #999;
+            margin-top: 0.1em;
+            font-size: 0.8em;
+        }
+
+        .textField {
+            font-size: 1em;
+            padding: 0.2em;
+            border: 1px solid #ccc;
+            border-radius: 0.5em;
+            margin-top: 0.2em;
+            background-color: transparent;
+        }
+
+        .selectField {
+            font-size: 1em;
+            padding: 0.2em;
+            border: 1px solid #ccc;
+            border-radius: 0.5em;
+            margin-top: 0.2em;
+            background-color: transparent;
+        }
+
+        .versionHint {
+            color: #999;
+            margin-top: 0.5em;
+            font-size: 0.5em;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            color: #999;
+            font-size: 0.5em;
+        }
+
+        #lesbianism {
+            color: #FF1493;
+            font-weight: 900;
+        }
+
+        .headerHint {
+            color: #999;
+            margin-top: 0.5em;
+            font-size: 0.5em;
+        }
+
+        .header {
+            font-size: 2em;
+            margin-bottom: 0.1em;
+        }
+
+    </style>
+</html>
+<body>
+    <div class="primary">
+        <div id="configuration" class="hidden">
+            <h1 class="header">nodead - configuration</h1>
+            <p class="headerHint">Changes are saved automatically</p>
+            <div id="panel">
+                <div class="field">
+                    <label for="firstName">
+                        First name
+                        <input type="text" class="textField" id="firstName" placeholder="First name">
+                    </label>
+                    <p class="hint">First name to be used on various services.</p>
+                </div>
+                <div class="field">
+                    <label for="lastName">
+                        Last name
+                        <input type="text" class="textField" id="lastName" placeholder="Last name">
+                    </label>
+                    <p class="hint">Last name to be used on various services.</p>
+                </div>
+                <div class="field">
+                    <label for="gender">
+                        Gramatical gender
+                        <select id="gender" class="selectField">
+                            <option value="f">Feminine</option>
+                            <option value="m">Masculine</option>
+                            <option value="n">Neutral</option>
+                        </select>
+                    </label>
+                    <p class="hint">This will determine which gramatical gender will be used to refer to you where applicable.</p>
+                </div>
+                <div class="field">
+                    <label for="emoji">
+                        Last name
+                        <input type="text" class="textField" id="emoji" placeholder="Emoji">
+                    </label>
+                    <p class="hint">A emoji you like. Can also be multiple characters :3</p>
+                </div>
+                <p class="versionHint">Script version: <span id="version">YOUSHOULDNOTSEETHIS</span></p>
+            </div>
+        </div>
+        <div id="scriptnotinstalled">
+            <h1>nodead - script not installed</h1>
+            <p>The script is either not installed or disabled. You can install it <a href="https://github.com/nullbytepl/anti-deadname">here</a></p>
+        </div>
+
+        <div class="footer">
+            <p>Created by Kamila Wojciechowska with <span id="heart" >❤️</span> and <span id="lesbianism">⚢</span></p>
+    </div>
+
+    <script>
+        const CLIENT_API_VERSION = 1;
+
+        // Check if window.api is available every 50ms
+        // Stop when it is available
+        const interval = setInterval(function() {
+            if (window.api) {
+                clearInterval(interval);
+                init();
+            }
+        }, 50);
+
+        function init() {
+            // Make the configuration visible
+            document.getElementById("configuration").classList.remove("hidden");
+            // Hide the script not installed message
+            document.getElementById("scriptnotinstalled").classList.add("hidden");
+
+            // Check if the api version is correct
+            if (window.api.apiVersion !== CLIENT_API_VERSION) {
+                console.warn("Client API version is not correct. Expected " + CLIENT_API_VERSION + " but got " + window.api.version);
+            }
+
+            // Get the configuration
+            if (window.api.hasUserConfigured) {
+                document.querySelector("#firstName").value = window.api.firstName;
+                document.querySelector("#lastName").value = window.api.lastName;
+                document.querySelector("#gender").value = window.api.gender;
+                console.log(`gender ${window.api.gender}`)
+                document.querySelector("#emoji").value = window.api.emoji;
+            }
+
+            document.querySelector("#version").innerText = window.api.scriptVersion;
+
+            // Add event listeners
+            document.querySelector("#firstName").addEventListener("input", function() {
+                if (!window.api.hasUserConfigured) {
+                    window.api.gender = document.querySelector("#gender").value;
+                }
+                window.api.firstName = this.value;
+            });
+
+            document.querySelector("#lastName").addEventListener("input", function() {
+                if (!window.api.hasUserConfigured) {
+                    window.api.gender = document.querySelector("#gender").value;
+                }
+                window.api.lastName = this.value;
+            });
+
+            document.querySelector("#gender").addEventListener("input", function() {
+                window.api.gender = this.value;
+            });
+
+            document.querySelector("#emoji").addEventListener("input", function() {
+                if (!window.api.hasUserConfigured) {
+                    window.api.gender = document.querySelector("#gender").value;
+                }
+                window.api.emoji = this.value;
+            });
+            
+        }
+    </script>
+</body>
+</html>
