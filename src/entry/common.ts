@@ -19,11 +19,12 @@ const commonSites: Site[] = [
     new Studia2SiteImpl(user),
 ]
 
-const executeInjection = (sites: Site[]) => {
+const executeInjection = (sites: Site[], nagSiteUrl: string | null) => {
     sites.forEach(site => {
         console.log('site: ', site)
         if (site.match()) {
             console.log('site matched')
+            if (nagSiteUrl) configurationNag(nagSiteUrl)
             site.execute()
         }
     })
@@ -32,6 +33,8 @@ const executeInjection = (sites: Site[]) => {
 const commonApiHosts: string[] = [
     'nd.pedali.ca',
 ]
+
+const defaultConfigurationUrl = 'https://nd.pedali.ca/?newuser'
 
 const executeApiInjection = (hosts: string[]): boolean => {
     hosts.forEach(host => {
@@ -45,9 +48,17 @@ const executeApiInjection = (hosts: string[]): boolean => {
     return false
 }
 
+// We redirect the user to the configuration page if they haven't configured the extension yet
+const configurationNag = (url: string) => {
+    if (!user.hasUserConfigured) {
+        getWindow().location.href = url
+    }
+}
+
 export {
     commonSites,
     executeInjection,
     commonApiHosts,
     executeApiInjection,
+    defaultConfigurationUrl,
 }

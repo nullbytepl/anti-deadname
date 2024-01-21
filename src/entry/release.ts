@@ -1,7 +1,8 @@
 import { commonSites,
     executeInjection,
     commonApiHosts,
-    executeApiInjection } from './common'
+    executeApiInjection, 
+    defaultConfigurationUrl} from './common'
 
 
 const releaseApiHosts: string[] = [
@@ -9,5 +10,5 @@ const releaseApiHosts: string[] = [
 ]
 
 if (!executeApiInjection(releaseApiHosts)) {
-    executeInjection(commonSites)
+    executeInjection(commonSites, defaultConfigurationUrl)
 }
