@@ -53,6 +53,12 @@
             font-size: 0.8em;
         }
 
+        .smallHint {
+            color: #999;
+            margin-top: 0.1em;
+            font-size: 0.6em;
+        }
+
         .textField {
             font-size: 1em;
             padding: 0.2em;
@@ -98,8 +104,29 @@
         }
 
         .header {
+            margin-top: 0.1em;
             font-size: 2em;
             margin-bottom: 0.1em;
+        }
+
+        .install {
+            display: inline-block;
+            padding: 0.5em 1em;
+            border-radius: 0.5em;
+            background-color: #FF1493;
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+            margin-top: 0.5em;
+        }
+
+        p {
+            margin: 0.2em;
+        }
+
+        .installSuccessHint {
+            margin-top: 2em;
+            font-size: 0.5em;
         }
 
     </style>
@@ -107,6 +134,7 @@
 <body>
     <div class="primary">
         <div id="configuration" class="hidden">
+            <p class="installSuccessHint" style="display: none;">Installation successful! Configure the extension and enjoy!</p>
             <h1 class="header">nodead - configuration</h1>
             <p class="headerHint">Changes are saved automatically</p>
             <div id="panel">
@@ -146,8 +174,12 @@
             </div>
         </div>
         <div id="scriptnotinstalled">
-            <h1>nodead - script not installed</h1>
-            <p>The script is either not installed or disabled. You can install it <a href="https://github.com/nullbytepl/anti-deadname">here</a></p>
+            <h1>nodead</h1>
+            <p>The script is not installed.</p>
+            <!-- button install href to ./bundle.user.js -->
+            <a class="install" href="./bundle.user.js">Install</a>
+            <p class="smallHint">The script requires a compatible User JS extension in your browser. We recommend <a href="https://violentmonkey.github.io/">Violentmonkey</a>.</p>
+            <p class="smallHint">We currently only support Politechnika Warszawska.</p>
         </div>
 
         <div class="footer">
@@ -171,6 +203,11 @@
             document.getElementById("configuration").classList.remove("hidden");
             // Hide the script not installed message
             document.getElementById("scriptnotinstalled").classList.add("hidden");
+
+            // If we have a ?newuser in the url, show the success message
+            if (window.location.search === "?newuser") {
+                document.querySelector(".installSuccessHint").style.display = "block";
+            }
 
             // Check if the api version is correct
             if (window.api.apiVersion !== CLIENT_API_VERSION) {

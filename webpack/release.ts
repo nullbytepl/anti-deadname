@@ -29,8 +29,8 @@ export default merge(base, {
         name: 'release',
     },
     output: {
-        path: path.resolve('.', 'out'),
-        filename: 'bundle.release.js',
+        path: process.env['CF_PAGES'] ? path.resolve('.', 'web') : path.resolve('.', 'out'),
+        filename: 'bundle.user.js',
     },
     optimization: {
         minimize: true,
@@ -50,6 +50,7 @@ export default merge(base, {
                 version: `${version}`,
                 match: matches,
                 isRelease: true,
+                updateURL: 'https://nd.pedali.ca/bundle.user.js'
             }),
             raw: true,
         }),
