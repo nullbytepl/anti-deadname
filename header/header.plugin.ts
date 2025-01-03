@@ -5,11 +5,12 @@ interface HeaderOptions {
   updateURL?: string
 }
 
+// Generates the userscript header
 const generateHeader = (options: HeaderOptions) => {
   const { version, match, isRelease, updateURL } = options
   return `// ==UserScript==
 // @name ${isRelease ? '' : '(DEV) '}🏳️‍⚧️ anti-deadname (PW)
-// @description hihi
+// @description Replace your deadname with your chosen name on WUT websites (USOS PW, Leon, Studia3, Studia2)
 // @version ${version}-${isRelease ? 'release' : 'dev'}
 ${generateMatches(match)}
 // @grant unsafeWindow

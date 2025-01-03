@@ -171,6 +171,7 @@
                     <p class="hint">An emoji you like. Can also be multiple characters :3</p>
                 </div>
                 <p class="versionHint">Script version: <span id="version">YOUSHOULDNOTSEETHIS</span></p>
+                <p class="versionHint">Read more on the <a href="https://github.com/nullbytepl/anti-deadname">Github page of the project.</a></p>
             </div>
         </div>
         <div id="scriptnotinstalled">
@@ -180,10 +181,13 @@
             <a class="install" href="./bundle.user.js">Install</a>
             <p class="smallHint">The script requires a compatible User JS extension in your browser. We recommend <a href="https://violentmonkey.github.io/">Violentmonkey</a>.</p>
             <p class="smallHint">We currently only support Politechnika Warszawska.</p>
+            <br />
+            <p class="smallHint">After installation, go to any supported website (for example <a href="https://usosweb.usos.pw.edu.pl/">USOS PW</a>) and you will be redirected to the settings page.</p>
+            <p class="smallHint">Read more on the <a href="https://github.com/nullbytepl/anti-deadname">Github page of the project.</a></p>
         </div>
 
         <div class="footer">
-            <p>Created by Kamila Wojciechowska with <span id="heart" >❤️</span> and <span id="lesbianism">⚢</span></p>
+            <p>Created by Kamila Wojciechowska (@whatsfemininity) with <span id="heart" >❤️</span> and <span id="lesbianism">⚢</span></p>
     </div>
 
     <script>
@@ -219,7 +223,6 @@
                 document.querySelector("#firstName").value = window.api.firstName;
                 document.querySelector("#lastName").value = window.api.lastName;
                 document.querySelector("#gender").value = window.api.gender;
-                console.log(`gender ${window.api.gender}`)
                 document.querySelector("#emoji").value = window.api.emoji;
             }
 

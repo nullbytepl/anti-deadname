@@ -1,3 +1,5 @@
+// List of URLs that the script should be active on
+// used by header.plugin.ts
 export default [
     'https://usosweb.usos.pw.edu.pl/*', // Usos PW
     'https://leon.pw.edu.pl/*', // Leon PW
